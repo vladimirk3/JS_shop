@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 4</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <p class = 'text'>Введите Фамилию и Имя (содержат только буквы, первые буквы заглавные):</p>
+    <input type="text" id='name' name = 'name'>
+    <p class = 'text'>Введите номер телефона в формате +7(000)000-0000:</p>
+    <input type="text" id='phone'>
+    <p class = 'text'>Введите email:</p>
+    <input type="text" id='mail'>
+    <p class = 'text'>Введите текст:</p>
+    <input type="text" id='usertxt'>
+    <p class = 'text'>Введите email:</p>
+    <input type="button" class='btn' value="Отправить">
+    
+    
+    <script>
+        //Задание 1
+        const str = "v 'trave' sidel 'kuznechik' da aren't don't";
+        const regexp = /((\s\')|('\s))/g;
+       
+        //Задание 2 
+        const regexp1 = /\B'|'\B/g;
+        rez = str.replace(regexp1, '"');
+        //console.log(rez);
+   
+        //Задание 3
+        let regexpName = /^[A-Z][a-z]+\s+[A-Z][a-z]+\s*$/i;
+        strName = 'Vladimir Kachura';
+        //console.log(strName.match(regexpName));
+        
+        let regexpPhone = /^\+7\(\d{3}\)\d{3}[-]\d{4}$/;
+        strPhone = '+7(000)000-0000';
+        //console.log(strPhone.match(regexpPhone));
+        
+        //mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+        let regexpMail = /^([a-z0-9_\-.+]+)@([a-z0-9_\-.+]+)\.([a-z0-9]{2,5})$/i;
+        strMail = 'my-mail@mail.ru';
+        //console.log(strMail.match(regexpMail));
+        
+        class Validate {
+            constructor () {
+                this.validName = false;
+                this.Name = '';
+                this.validPhone = false;
+                this.Phone = '';
+                this.valid.Mail = false;
+                this.Mail = '';
+                
+                this.regexpName = /^[A-Z][a-z]+\s+[A-Z][a-z]+\s*$/i;
+                this.regexpPhone = /^\+7\(\d{3}\)\d{3}[-]\d{4}$/;
+                this.regexpMail = /^([a-z0-9_\-.+]+)@([a-z0-9_\-.+]+)\.([a-z0-9]{2,5})$/i;
+                
+                this._init();
+            }
+            
+            valid = (evt) => {
+                let result = false;
+                switch (evt.currentTarget.getAttribute('id')) {
+                    case 'name':  
+                        if (evt.target.value.match(this.regexpName)) {
+                            this.validName = true;
+                            this.Name = evt.target.value;
+                            evt.currentTarget.classList.remove('error');
+                            console.log(this.validName);
+                            return true;
+                        } else {
+                            this.validName = false;
+                            this.Name = '';
+                            evt.currentTarget.classList.add('error');
+                            return false;
+                        } 
+                    case 'phone': 
+                        if (evt.target.value.match(this.regexpPhone)) {
+                            this.validPhone = true;
+                            this.Phone = evt.target.value;
+                            evt.currentTarget.classList.remove('error');
+                            console.log(this.validPhone);
+                            return true;
+                        } else {
+                            this.validPhone = false;
+                            this.Phone = '';
+                            evt.currentTarget.classList.add('error');
+                            return false;
+                        } 
+                    case 'mail': 
+                        if (evt.target.value.match(this.regexpMail)) {
+                            this.validMail = true;
+                            this.Mail = evt.target.value;
+                            evt.currentTarget.classList.remove('error');
+                            console.log(this.validMail);
+                            return true;
+                        } else {
+                            this.validMail = false;
+                            this.Mail = '';
+                            evt.currentTarget.classList.add('error');
+                            return false;
+                        }             
+                    default: return null;
+                }
+            }
+            
+            showMessage = (rez, evt) => {
+                if (rez) {
+                    evt.currentTarget.insertAdjacentHTML ('afterend', '<div id="message">Сообщение успешно отправлено</div>');
+                    setTimeout(() => message.remove(), 2000);
+                } else {
+                    evt.currentTarget.insertAdjacentHTML ('afterend', '<div id="message"><p>Данные введены не корректно:</p></div>');
+                    if (!this.validName) message.insertAdjacentHTML('beforeend', '<p>Имя</p>');
+                    if (!this.validPhone) message.insertAdjacentHTML('beforeend', '<p>Номер телефона</p>');
+                    if (!this.validMail) message.insertAdjacentHTML('beforeend', '<p>Email</p>');
+                    setTimeout(() => message.remove(), 2000);
+                }
+                
+            }
+            
+            clickbtn = (evt) => {
+                if (this.validName && this.validPhone && this.validMail) {
+                    this.showMessage (true, evt);                  
+                } else {
+                    this.showMessage (false, evt);
+                }
+            }
+            
+            _init() {
+                document.querySelector('#name').addEventListener('keyup', this.valid);
+                document.querySelector('#phone').addEventListener('keyup', this.valid);
+                document.querySelector('#mail').addEventListener('keyup', this.valid);
+                document.querySelector('.btn').addEventListener('click', this.clickbtn);
+            }
+        }
+        
+        const val = new Validate ();
+    </script>
+</body>
+</html>

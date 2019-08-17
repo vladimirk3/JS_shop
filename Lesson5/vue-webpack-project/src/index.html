@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field" v-model = "searchText" >
+                    <button class="btn-search" type="submit" @click = 'search ()'>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button" @click = "cartVisible = !cartVisible; getCart()">Корзина</button>
+                <div v-show = "cartVisible" class="cart-block">
+                    <div class="cart-item" data-id="${this.id_product}" v-for="cItem of Cart">
+                    	<div class="product-bio">
+                            <img :src="imgCart" alt="Some img">
+                            <div class="product-desc">
+                            	<p class="product-title">{{cItem.product_name}}</p>
+                                <p class="product-quantity">К-во: {{cItem.quantity}}</p>
+                                <p class="product-single-price">$ {{cItem.price}} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">{{Sum(cItem.price, cItem.quantity)}}</p>
+                            <button class="del-btn" @click="rmvProduct(cItem)">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <div class="product-item" data-id="${this.id_product}" v-for="product of products">
+                    <img :src="imgCatalog" alt="Some img">
+                    <div class="desc">
+                        <h3> {{ product.product_name }}</h3>
+                        <p>{{ product.price }} $</p>
+                        <button class="buy-btn" @click="addProduct (product)">Купить</button>
+                    </div>
+                </div>
+            </div>
+            <p>Фильтр</p>
+            <div class="products">
+                <div class="product-item" data-id="${this.id_product}" v-for="fproduct of filtProducts">
+                    <img :src="imgCatalog" alt="Some img">
+                    <div class="desc">
+                        <h3> {{ fproduct.product_name }}</h3>
+                        <p>{{ fproduct.price }} $</p>
+                        <button class="buy-btn" @click="addProduct (fproduct)">Купить</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
