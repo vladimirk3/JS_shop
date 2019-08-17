@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Рассчет бургера</title>
+    
+</head>
+<body>
+    <form action="">
+        <p>Большой или маленький бургер:</p>
+        <input type="radio" id='size' name='size' checked> Большой
+        <input type="radio" id='size' name='size'> Маленький
+        <p>Выберите с чем будет бургер:</p>
+        <input type="radio" id='btype' name='btype' checked> С сыром 
+        <input type="radio" id='btype' name='btype'> С салатом 
+        <input type="radio" id='btype' name='btype'> С картофелем
+        <p>С приправой или без:</p>
+        <input type="radio" id='dressing' name='dressing' checked> С приправой 
+        <input type="radio" id='dressing' name='dressing'> Без приправы
+        <p>С майонезом или без:</p>
+        <input type="radio" id='sauce' name='sauce' checked> С майонезом 
+        <input type="radio" id='sauce' name='sauce'> Без майонеза
+        <hr>
+        <input type="button", id='calc', value='Рассчитать'>        
+    </form>
+    
+    <script>
+        class burger {
+            constructor () {
+                this.size1 = true; //big=true
+                this.btype = 0; //сыром (0); салат (1); карофель (2) 
+                this.dressing = false;
+                this.sauce = false;
+                this.calories = 0;
+                this.price = 0;
+                this._init();
+            }
+            
+            _init () {
+                document.querySelector('#calc').addEventListener('click', this.fetchIn);
+                document.querySelector('#calc').addEventListener('click', this.calc);
+            }
+            
+            fetchIn() {
+                let size;
+                let btypeRes = 0;
+                let dressing;
+                let sauce;
+                
+                size = document.querySelectorAll('#size')[0].checked;
+                this.size1 = size;
+                
+                let btype = document.querySelectorAll('#btype');
+                for (let i=0; i<btype.length; i++) {
+                    if (btype[i].checked) btypeRes=i;
+                }
+                this.btype = btypeRes;
+                
+                dressing = document.querySelectorAll('#dressing')[0].checked;
+                this.dressing = dressing;
+                
+                sauce = document.querySelectorAll('#sauce')[0].checked;
+                this.sauce = sauce;
+                
+            }
+            reset () {
+                
+            }
+            
+            calc () {
+                let price = 0;
+                let calories =0;  
+                
+                if (this.size) {
+                    price += 100;
+                    calories +=40;
+                } else {
+                    price += 50;
+                    calories +=20;
+                }
+                
+                switch (this.btype) { 
+                    case 0:
+                    {
+                        price += 10;
+                        calories +=20;
+                        break;
+                    }
+                    case 1: 
+                    {
+                        price += 20;
+                        calories +=5;
+                        break;
+                    }
+                    case 2:  
+                    {
+                        price += 15;
+                        calories +=10;
+                        break;
+                    }
+                }
+                
+                if (this.dressing) {
+                    price += 15;
+                    calories +=0;
+                }
+                
+                if (this.sauce) {
+                    price += 20;
+                    calories +=5;
+                }
+                this.price = price;
+                this.calories = calories;
+                console.log(this.price);
+                console.log(this.calories);
+            }
+            
+
+        }
+        let burg = new burger();
+  
+    </script>
+</body>
+</html>
+
