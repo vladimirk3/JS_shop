@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"> 
+        <h1>{{hello}}</h1> 
+        <input type="text" v-model.lazy=someText> <br> <p>{{someText}}</p>
+
+        <ul>
+            <li v-if="toggler === true" v-on:click="toggler = !toggler">Да нажми меня</li>
+            <li v-else @click="toggler = !toggler">Нет нажми меня</li>
+
+            <li v-show="toggler === true" v-on:click="toggler = !toggler">Да нажми меня</li>
+            <li v-show="!toggler" @click="toggler = !toggler">Нет нажми меня</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</body>
+</html>
